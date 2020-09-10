@@ -39,97 +39,165 @@ struct write_struct {
 };
 
 struct write_struct write_list[] = {
-	// synchronous dirty ratio --> 50%
-	{"/proc/sys/vm/dirty_ratio", "50", 0},
+	{"/proc/sys/vm/dirty_ratio", "80", 0},
+	{"/proc/sys/vm/dirty_background_ratio", "70", 0},
 	{"/proc/sys/kernel/unprivileged_bpf_disabled", "1", 0},
+	{"/proc/sys/vm/swappiness", "5", 0},
+	{"/proc/sys/vm/dirty_writeback_centisecs", "30000", 0},
+	{"/proc/sys/vm/dirty_expire_centisecs", "30000", 0},
+	{"/proc/sys/fs/xfs/xfssyncd_centisecs", "30000", 0},
+	{"/proc/sys/vm/vfs_cache_pressure", "50", 0},
+	{"/proc/sys/vm/min_free_kbytes", "336662", 0},
+	{"/proc/sys/vm/vfs_cache_pressure", "50", 0},
+	{"/proc/sys/fs/inotify/max_user_watches", "10000000", 0},
 
-	// start IO at 5% not 10%... start IO a little earlier asynchronously, since memory sizes are bigger now
-	{"/proc/sys/vm/dirty_background_ratio", "5", 0},
-
-	// 15 seconds before the VM starts writeback, allowing the FS to deal with this better
-	{"/proc/sys/vm/dirty_writeback_centisecs", "1500", 0},
-	{"/proc/sys/vm/swappiness", "10", 0},
-	{"/sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs", "30000"},
+	{"/sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs", "30000", 0},
 	{"/sys/devices/virtual/graphics/fbcon/cursor_blink", "0", 0},
 	{"/sys/kernel/rcu_expedited", "0", 0},
 	{"/proc/sys/vm/mmap_min_addr", "65536", 0},
 
-	// oom less
+// oom less
 	{"/proc/sys/vm/extfrag_threshold", "100", 0},
 	{"/sys/kernel/mm/ksm/sleep_millisecs", "4000", 0},
 
-	// w /sys/kernel/mm/ksm/run - - - - 1
 	{"/sys/kernel/mm/ksm/pages_to_scan", "1000", 0},
 	{"/proc/sys/net/core/rmem_max", "1703936", 0},
 	{"/proc/sys/net/core/wmem_max", "1703936", 0},
+	{"/proc/sys/net/core/somaxconn", "4096", 0},
+	{"/proc/sys/net/core/netdev_max_backlog", "5000", 0},
+	{"/proc/sys/net/core/netdev_budget", "1000", 0},
+	{"/proc/sys/net/core/netdev_budget_usecs", "5000", 0},
+	{"/proc/sys/net/ipv4/tcp_fastopen", "3", 0},
+	{"/proc/sys/net/ipv4/tcp_timestamps", "0", 0},
+	{"/proc/sys/net/ipv4/tcp_mtu_probing", "1", 0},
+	{"/proc/sys/net/ipv4/tcp_base_mss", "1024", 0},
 
-	// This tuneable decides the minimum time a task will be be allowed to
-	// run on CPU before being pre-empted out
+	{"/proc/sys/kernel/sysrq", "1", 0},
+
+// This tuneable decides the minimum time a task will be be allowed to
+// run on CPU before being pre-empted out
 	{"/proc/sys/kernel/sched_min_granularity_ns", "2250000", 0},
 	{"/proc/sys/kernel/sched_migration_cost_ns", "50000", 0},
-
-	// Ability of tasks being woken to preempt the current task
+// Ability of tasks being woken to preempt the current task
 	{"/proc/sys/kernel/sched_wakeup_granularity_ns", "15000000", 0},
-
-	// sched_autogroup would improve interactive desktop performance in the face of
+    
+    // sched_autogroup would improve interactive desktop performance in the face of
 	// multi‐ process, CPU-intensive workloads. Whereas it would harm performance,
 	// thus disable it on Server
-	{"/proc/sys/kernel/sched_autogroup_enabled", "0", 1},
+    {"/proc/sys/kernel/sched_autogroup_enabled", "1", 0},
 
-	// audio pm
-	{"/sys/module/snd_hda_intel/parameters/power_save", "1", 0},
-
-	// P state stuff
+// audio pm
+	{"/sys/module/snd_hda_intel/parameters/power_save", "0", 0},
+// P state stuff
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", 0},
-
-	// we want at least half performance, this helps us in race-to-halt and
-	// to give us reasonable responses
-	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "50", 0},
+// we want at least half performance, this helps us in race-to-halt and
+// to give us reasonable responses
+	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "70", 0},
 	{"/proc/sys/net/core/default_qdisc", "fq", 0},
 
-	// Disable acceptance of all ICMP redirected packets on all interfaces.
+// Disable acceptance of all ICMP redirected packets on all interfaces.
 	{"/proc/sys/net/ipv4/conf/all/accept_redirects", "0", 0},
 	{"/proc/sys/net/ipv6/conf/all/accept_redirects", "0", 0},
 	{"/proc/sys/net/ipv4/conf/default/accept_redirects", "0", 0},
 	{"/proc/sys/net/ipv6/conf/default/accept_redirects", "0", 0},
 
-	// Disables sending of all IPv4 ICMP redirected packets on all interfaces.
+// Disables sending of all IPv4 ICMP redirected packets on all interfaces.
 	{"/proc/sys/net/ipv4/conf/all/send_redirects", "0", 0},
 	{"/proc/sys/net/ipv4/conf/default/send_redirects", "0", 0},
 
-	// Disables acceptance of secure ICMP redirected packets on all interfaces.
+// Disables acceptance of secure ICMP redirected packets on all interfaces.
 	{"/proc/sys/net/ipv4/conf/all/secure_redirects", "0", 0},
 	{"/proc/sys/net/ipv4/conf/default/secure_redirects", "0", 0},
 
-	// SATA link power management
-	{"/sys/class/scsi_host/*/link_power_management_policy", "med_power_with_dipm", 0},
+// SATA link power management
+	{"/sys/class/scsi_host/*/link_power_management_policy", "max_performance", 0},
 
-	// Performance tuning for SATA and NVME storage
+// Performance tuning for SATA and NVME storage
+	{"/sys/block/nvme*/queue/scheduler", "bfq", 0},
 	{"/sys/block/sd*/queue/scheduler", "bfq", 0},
-	{"/sys/block/sd*/queue/nr_requests", "1024", 0},
-	{"/sys/block/sd*/queue/read_ahead_kb", "1024", 0},
-	{"/sys/block/sd*/queue/add_random", "1", 0},
+	{"/sys/block/loop*/queue/scheduler", "bfq", 0},
 
-	// For server, prefer mq-deadline to max throughput
-	{"/sys/block/nvme*/queue/scheduler", "mq-deadline", 1},
+	{"/sys/block/nvme*/queue/write_cache", "write back", 0},
+	{"/sys/block/sd*/queue/write_cache", "write back", 0},
 
-	// For desktop, prefer bfq low_latency
-	{"/sys/block/nvme*/queue/scheduler", "bfq", -1},
-	{"/sys/block/nvme*/queue/iosched/low_latency", "1", -1},
+	{"/sys/block/nvme*/queue/iosched/back_seek_penalty", "1", 0},
+	{"/sys/block/sda/queue/iosched/back_seek_penalty", "2", 0},
+	{"/sys/block/sdb/queue/iosched/back_seek_penalty", "2", 0},
+	{"/sys/block/sdc/queue/iosched/back_seek_penalty", "2", 0},
+	{"/sys/block/sdd/queue/iosched/back_seek_penalty", "2", 0},
+	{"/sys/block/sde/queue/iosched/back_seek_penalty", "1", 0},
+
+	{"/sys/block/nvme*/queue/iosched/low_latency", "1", 0},
+	{"/sys/block/sda/queue/iosched/low_latency", "0", 0},
+	{"/sys/block/sdb/queue/iosched/low_latency", "0", 0},
+	{"/sys/block/sdc/queue/iosched/low_latency", "0", 0},
+	{"/sys/block/sdd/queue/iosched/low_latency", "0", 0},
+	{"/sys/block/sde/queue/iosched/low_latency", "1", 0},
+
+	{"/sys/block/nvme*/queue/read_ahead_kb", "256", 0},
+	{"/sys/block/sda/queue/read_ahead_kb", "1024", 0},
+	{"/sys/block/sdb/queue/read_ahead_kb", "1024", 0},
+	{"/sys/block/sdc/queue/read_ahead_kb", "1024", 0},
+	{"/sys/block/sdd/queue/read_ahead_kb", "1024", 0},
+	{"/sys/block/sde/queue/read_ahead_kb", "256", 0},
+
+	{"/sys/block/nvme0n1/queue/max_sectors_kb", "1280", 0},
+	{"/sys/block/nvme1n1/queue/max_sectors_kb", "1280", 0},
+	{"/sys/block/sda/queue/max_sectors_kb", "1024", 0},
+	{"/sys/block/sdb/queue/max_sectors_kb", "1024", 0},
+	{"/sys/block/sdc/queue/max_sectors_kb", "1024", 0},
+	{"/sys/block/sdd/queue/max_sectors_kb", "1024", 0},
+	{"/sys/block/sde/queue/max_sectors_kb", "1280", 0},
 
 	{"/sys/block/nvme*/queue/nr_requests", "2048", 0},
-	{"/sys/block/nvme*/queue/read_ahead_kb", "256", 0},
-	{"/sys/block/nvme*/queue/add_random", "1", 0},
+	{"/sys/block/sda/queue/nr_requests", "1024", 0},
+	{"/sys/block/sdb/queue/nr_requests", "1024", 0},
+	{"/sys/block/sdc/queue/nr_requests", "1024", 0},
+	{"/sys/block/sdd/queue/nr_requests", "1024", 0},
+	{"/sys/block/sde/queue/nr_requests", "2048", 0},
 
-	// Enable turbo mode max
-	{"/proc/sys/kernel/sched_itmt_enabled", "1", 0},
+	{"/sys/block/nvme*/queue/iosched/timeout_sync", "131", 0},
+	{"/sys/block/sd*/queue/iosched/timeout_sync", "131", 0},
 
-	// Reload the microcode at boot
-	{"/sys/devices/system/cpu/microcode/reload", "1", 0},
+	{"/sys/block/nvme*/queue/iosched/fifo_expire_sync", "263", 0},
+	{"/sys/block/sd*/queue/iosched/fifo_expire_sync", "263", 0},
 
+	{"/sys/block/nvme*/queue/iosched/fifo_expire_async", "353", 0},
+	{"/sys/block/sd*/queue/iosched/fifo_expire_async", "353", 0},
+
+	{"/sys/block/nvme0n1/queue/iosched/back_seek_max", "268435456", 0},
+	{"/sys/block/nvme1n1/queue/iosched/back_seek_max", "16777216", 0},
+	{"/sys/block/sda/queue/iosched/back_seek_max", "16384", 0},
+	{"/sys/block/sdb/queue/iosched/back_seek_max", "16384", 0},
+	{"/sys/block/sdc/queue/iosched/back_seek_max", "16384", 0},
+	{"/sys/block/sdd/queue/iosched/back_seek_max", "16384", 0},
+	{"/sys/block/sde/queue/iosched/back_seek_max", "125829120", 0},
+
+	{"/sys/block/nvme*/queue/iosched/slice_idle", "0", 0},
+	{"/sys/block/sd*/queue/iosched/slice_idle", "0", 0},
+	
+	{"/sys/block/{sd,mmc,nvme}*/queue/iosched/slice_idle", "0", 0},
+
+	{"/sys/block/nvme*/queue/add_random", "0", 0},
+	{"/sys/block/sd*/queue/add_random", "0", 0},
+
+	{"/sys/block/bcache0/bcache/cache_mode", "writeback", 0},
+	{"/sys/block/bcache0/queue/read_ahead_kb", "256", 0},
+	{"/sys/block/bcache0/bcache/writeback_delay", "300", 0},
+	{"/sys/block/bcache0/bcache/sequential_cutoff", "16777216", 0},
+	{"/sys/block/bcache0/bcache/writeback_percent", "50", 0},
+	{"/sys/fs/bcache/d8775d9c-c3fd-4086-8390-4f9e2eb63800/congested_read_threshold_us", "0", 0},
+	{"/sys/fs/bcache/d8775d9c-c3fd-4086-8390-4f9e2eb63800/congested_write_threshold_us", "0", 0},
+
+// Enable turbo mode max
+// {"/proc/sys/kernel/sched_itmt_enabled", "1", 0},
+
+// Reload the microcode at boot
+	{"/sys/devices/system/cpu/microcode/reload", "0", 0},
+	
 	{"/proc/sys/kernel/nmi_watchdog", "0", 0},
-	{"/sys/block/{sd,mmc,nvme, 0}*/queue/iosched/slice_idle", "0"},
-
+	
+	
 	// End of list.
 	{NULL, NULL, 0}
 };
