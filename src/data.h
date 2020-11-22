@@ -200,7 +200,7 @@ struct write_struct write_list[] = {
 	{"/sys/block/bcache0/bcache/cache_mode", "writeback", -1},
 	{"/sys/block/bcache0/queue/read_ahead_kb", "512", -1},
 	{"/sys/block/bcache0/bcache/writeback_delay", "300", -1},
-	{"/sys/block/bcache0/bcache/sequential_cutoff", "16777216", -1},
+	{"/sys/block/bcache0/bcache/sequential_cutoff", "8388608", -1},
 	{"/sys/block/bcache0/bcache/writeback_percent", "40", -1},
 	{"/sys/fs/bcache/755950e5-4570-40bd-8fa7-1c663270dbca/congested_read_threshold_us", "0", -1},
 	{"/sys/fs/bcache/755950e5-4570-40bd-8fa7-1c663270dbca/congested_write_threshold_us", "0", -1},
