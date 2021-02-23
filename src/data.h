@@ -99,9 +99,9 @@ struct write_struct write_list[] = {
 
 // Disable acceptance of all ICMP redirected packets on all interfaces.
 	{"/proc/sys/net/ipv4/conf/all/accept_redirects", "0", -1},
-	{"/proc/sys/net/ipv6/conf/all/accept_redirects", "0", -1},
+// 	{"/proc/sys/net/ipv6/conf/all/accept_redirects", "0", -1},
 	{"/proc/sys/net/ipv4/conf/default/accept_redirects", "0", -1},
-	{"/proc/sys/net/ipv6/conf/default/accept_redirects", "0", -1},
+// 	{"/proc/sys/net/ipv6/conf/default/accept_redirects", "0", -1},
 
 // Disables sending of all IPv4 ICMP redirected packets on all interfaces.
 	{"/proc/sys/net/ipv4/conf/all/send_redirects", "0", -1},
