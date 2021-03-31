@@ -239,8 +239,8 @@ struct write_struct write_list[] = {
 	{"/sys/block/bcache0/bcache/writeback_delay", "300", -1},
 	{"/sys/block/bcache0/bcache/sequential_cutoff", "16777216", -1},
 	{"/sys/block/bcache0/bcache/writeback_percent", "40", -1},
-	{"/sys/fs/bcache/f75a1a39-b705-4ce4-ba8f-a3594e5add01/congested_read_threshold_us", "0", -1},
-	{"/sys/fs/bcache/f75a1a39-b705-4ce4-ba8f-a3594e5add01/congested_write_threshold_us", "0", -1},
+	{"/sys/fs/bcache/c88964b1-2dbd-43cd-99dd-e1360a827f09/congested_read_threshold_us", "0", -1},
+	{"/sys/fs/bcache/c88964b1-2dbd-43cd-99dd-e1360a827f09/congested_write_threshold_us", "0", -1},
 
 // Enable turbo mode max
 // {"/proc/sys/kernel/sched_itmt_enabled", "1", -1},
