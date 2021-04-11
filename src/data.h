@@ -45,13 +45,12 @@ struct write_struct write_list[] = {
 	{"/proc/sys/kernel/msgmax", "65535", -1},
 	{"/proc/sys/kernel/msgmnb", "65535", -1},
 	{"/proc/sys/kernel/randomize_va_space", "0", -1},
-	{"/proc/sys/vm/swappiness", "10", -1},
+	{"/proc/sys/vm/swappiness", "5", -1},
 	{"/proc/sys/vm/dirty_writeback_centisecs", "40000", -1},
 	{"/proc/sys/vm/dirty_expire_centisecs", "40000", -1},
 	{"/proc/sys/fs/xfs/xfssyncd_centisecs", "40000", -1},
-	{"/proc/sys/vm/vfs_cache_pressure", "20", -1},
 	{"/proc/sys/vm/min_free_kbytes", "262144", -1},
-	{"/proc/sys/vm/vfs_cache_pressure", "50", -1},
+	{"/proc/sys/vm/vfs_cache_pressure", "40", -1},
 	{"/proc/sys/fs/inotify/max_user_watches", "524288", -1},
 	{"/proc/sys/fs/file-max", "2097152", -1},
 
@@ -91,6 +90,7 @@ struct write_struct write_list[] = {
 	// multi‐ process, CPU-intensive workloads. Whereas it would harm performance,
 	// thus disable it on Server
 	{"/proc/sys/kernel/sched_autogroup_enabled", "1", -1},
+	{"/proc/sys/kernel/sched_energy_aware", "0", -1},
 
 // audio pm
 	{"/sys/module/snd_hda_intel/parameters/power_save", "0", -1},
@@ -99,7 +99,8 @@ struct write_struct write_list[] = {
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", -1},
 // we want at least half performance, this helps us in race-to-halt and
 // to give us reasonable responses
-	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "70", -1},
+	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "90", -1},
+	{"/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost", "1", -1},
 	{"/proc/sys/net/core/default_qdisc", "fq", -1},
 	{"/proc/sys/net/ipv4/tcp_congestion_control", "bbr", -1},
 
