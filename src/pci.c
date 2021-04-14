@@ -101,7 +101,7 @@ void do_pci_pm(void)
 			if ( (known_good[i].vendor == vendor && known_good[i].device == device)) {
 				if (asprintf(&filename, "/sys/bus/pci/devices/%s/power/control", entry->d_name) < 0)
 					assert(0);
-				write_string_to_file(filename, "auto");
+				write_string_to_file(filename, "on");
 				free(filename);
 				break;
 			}

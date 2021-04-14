@@ -99,7 +99,7 @@ struct write_struct write_list[] = {
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", -1},
 // we want at least half performance, this helps us in race-to-halt and
 // to give us reasonable responses
-	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "90", -1},
+	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "80", -1},
 	{"/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost", "1", -1},
 	{"/proc/sys/net/core/default_qdisc", "fq", -1},
 	{"/proc/sys/net/ipv4/tcp_congestion_control", "bbr", -1},
@@ -120,6 +120,8 @@ struct write_struct write_list[] = {
 
 // SATA link power management
 	{"/sys/class/scsi_host/*/link_power_management_policy", "max_performance", -1},
+
+	{"/sys/bus/pci/devices/*/power/control", "on", -1},
 
 // Performance tuning for SATA and NVME storage
 	{"/sys/block/nvme0n1/queue/scheduler", "bfq", -1},
@@ -243,15 +245,14 @@ struct write_struct write_list[] = {
 	{"/sys/fs/bcache/c88964b1-2dbd-43cd-99dd-e1360a827f09/congested_read_threshold_us", "0", -1},
 	{"/sys/fs/bcache/c88964b1-2dbd-43cd-99dd-e1360a827f09/congested_write_threshold_us", "0", -1},
 
-// Enable turbo mode max
-// {"/proc/sys/kernel/sched_itmt_enabled", "1", -1},
-
 // Reload the microcode at boot
 	{"/sys/devices/system/cpu/microcode/reload", "0", -1},
 	
 	{"/proc/sys/kernel/nmi_watchdog", "0", -1},
 	
-	
+// Enable turbo mode max
+	{"/proc/sys/kernel/sched_itmt_enabled", "1", -1},
+
 	// End of list.
 	{NULL, NULL, 0}
 };

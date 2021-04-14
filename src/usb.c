@@ -118,7 +118,7 @@ void do_usb_pm(void)
 			    (known_good[i].class == class && class != 0)) {
 				if (asprintf(&filename, "/sys/bus/usb/devices/%s/power/control", entry->d_name) < 0)
 					assert(0);
-				write_string_to_file(filename, "auto");
+				write_string_to_file(filename, "on");
 				free(filename);
 			}
 
