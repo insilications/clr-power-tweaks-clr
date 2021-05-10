@@ -253,6 +253,9 @@ struct write_struct write_list[] = {
 // Enable turbo mode max
 	{"/proc/sys/kernel/sched_itmt_enabled", "1", -1},
 
+// Disable coredump
+	{"/proc/sys/kernel/core_pattern", "|/bin/false", -1},
+
 	// End of list.
 	{NULL, NULL, 0}
 };
