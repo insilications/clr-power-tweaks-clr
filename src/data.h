@@ -63,7 +63,7 @@ struct write_struct write_list[] = {
 
 // oom less
 	{"/proc/sys/vm/extfrag_threshold", "100", -1},
-	{"/sys/kernel/mm/ksm/run", "1", -1},
+	{"/sys/kernel/mm/ksm/run", "0", -1},
 	{"/sys/kernel/mm/ksm/sleep_millisecs", "4500", -1},
 	{"/sys/kernel/mm/ksm/pages_to_scan", "1000", -1},
 	{"/proc/sys/net/core/rmem_max", "2703936", -1},
