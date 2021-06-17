@@ -50,8 +50,8 @@ struct write_struct write_list[] = {
 	{"/proc/sys/vm/dirty_expire_centisecs", "40000", -1},
 	{"/proc/sys/fs/xfs/xfssyncd_centisecs", "40000", -1},
 	{"/proc/sys/fs/xfs/filestream_centisecs", "20000", -1},
-	{"/proc/sys/vm/min_free_kbytes", "262144", -1},
-	{"/proc/sys/vm/vfs_cache_pressure", "40", -1},
+	{"/proc/sys/vm/min_free_kbytes", "352000", -1},
+	{"/proc/sys/vm/vfs_cache_pressure", "45", -1},
 	{"/proc/sys/fs/inotify/max_user_watches", "524288", -1},
 	{"/proc/sys/fs/file-max", "2097152", -1},
 
