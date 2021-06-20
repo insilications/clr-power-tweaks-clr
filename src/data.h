@@ -39,8 +39,8 @@ struct write_struct {
 };
 
 struct write_struct write_list[] = {
-	{"/proc/sys/vm/dirty_ratio", "80", -1},
-	{"/proc/sys/vm/dirty_background_ratio", "70", -1},
+	{"/proc/sys/vm/dirty_ratio", "85", -1},
+	{"/proc/sys/vm/dirty_background_ratio", "75", -1},
 	{"/proc/sys/kernel/unprivileged_bpf_disabled", "1", -1},
 	{"/proc/sys/kernel/msgmax", "65535", -1},
 	{"/proc/sys/kernel/msgmnb", "65535", -1},
@@ -50,7 +50,7 @@ struct write_struct write_list[] = {
 	{"/proc/sys/vm/dirty_expire_centisecs", "40000", -1},
 	{"/proc/sys/fs/xfs/xfssyncd_centisecs", "40000", -1},
 	{"/proc/sys/fs/xfs/filestream_centisecs", "20000", -1},
-	{"/proc/sys/vm/min_free_kbytes", "352000", -1},
+	{"/proc/sys/vm/min_free_kbytes", "342000", -1},
 	{"/proc/sys/vm/vfs_cache_pressure", "45", -1},
 	{"/proc/sys/fs/inotify/max_user_watches", "524288", -1},
 	{"/proc/sys/fs/file-max", "2097152", -1},
