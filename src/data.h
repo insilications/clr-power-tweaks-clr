@@ -125,6 +125,7 @@ struct write_struct write_list[] = {
 	{"/sys/bus/pci/devices/*/power/control", "on", -1},
 
 // Performance tuning for SATA and NVME storage
+	{"/sys/block/bcache0/queue/scheduler", "bfq", -1},
 	{"/sys/block/nvme0n1/queue/scheduler", "bfq", -1},
 	{"/sys/block/nvme1n1/queue/scheduler", "bfq", -1},
 	{"/sys/block/sda/queue/scheduler", "bfq", -1},
@@ -132,7 +133,7 @@ struct write_struct write_list[] = {
 	{"/sys/block/sdc/queue/scheduler", "bfq", -1},
 	{"/sys/block/sdd/queue/scheduler", "bfq", -1},
 	{"/sys/block/sde/queue/scheduler", "bfq", -1},
-	// {"/sys/block/loop*/queue/scheduler", "bfq", -1},
+	{"/sys/block/loop*/queue/scheduler", "bfq", -1},
 
 	{"/sys/block/nvme0n1/queue/write_cache", "write back", -1},
 	{"/sys/block/nvme1n1/queue/write_cache", "write back", -1},
