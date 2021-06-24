@@ -82,10 +82,10 @@ struct write_struct write_list[] = {
 
 // This tuneable decides the minimum time a task will be be allowed to
 // run on CPU before being pre-empted out
-	{"/proc/sys/kernel/sched_min_granularity_ns", "2250000", -1},
-	{"/proc/sys/kernel/sched_migration_cost_ns", "50000", -1},
+	{"/sys/kernel/debug/sched/min_granularity_ns", "2250000", -1},
+	{"/sys/kernel/debug/sched/migration_cost_ns", "50000", -1},
 // Ability of tasks being woken to preempt the current task
-	{"/proc/sys/kernel/sched_wakeup_granularity_ns", "15000000", -1},
+	{"/sys/kernel/debug/sched/wakeup_granularity_ns", "15000000", -1},
 
 	// sched_autogroup would improve interactive desktop performance in the face of
 	// multi‐ process, CPU-intensive workloads. Whereas it would harm performance,
