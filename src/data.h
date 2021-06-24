@@ -98,6 +98,7 @@ struct write_struct write_list[] = {
 	{"/sys/module/snd_hda_intel/parameters/power_save_controller", "0", -1},
 // P state stuff
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", -1},
+	{"/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference", "performance", -1},
 	{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "0", -1},
 // we want at least half performance, this helps us in race-to-halt and
 // to give us reasonable responses
