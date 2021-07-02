@@ -39,9 +39,6 @@ struct write_struct {
 };
 
 struct write_struct write_list[] = {
-// Enable turbo mode max
-	{"/proc/sys/kernel/sched_itmt_enabled", "1", -1},
-//
 	{"/proc/sys/vm/dirty_ratio", "85", -1},
 	{"/proc/sys/vm/dirty_background_ratio", "75", -1},
 	{"/proc/sys/kernel/unprivileged_bpf_disabled", "1", -1},
@@ -91,7 +88,6 @@ struct write_struct write_list[] = {
 	{"/sys/kernel/debug/sched/wakeup_granularity_ns", "15000000", -1},
 	{"/proc/sys/kernel/sched_min_granularity_ns", "2250000", -1},
 	{"/proc/sys/kernel/sched_migration_cost_ns", "50000", -1},
-
 	// Ability of tasks being woken to preempt the current task
 	{"/proc/sys/kernel/sched_wakeup_granularity_ns", "15000000", -1},
 
@@ -99,19 +95,21 @@ struct write_struct write_list[] = {
 	// multi‐ process, CPU-intensive workloads. Whereas it would harm performance,
 	// thus disable it on Server
 	{"/proc/sys/kernel/sched_autogroup_enabled", "1", -1},
-// 	{"/proc/sys/kernel/sched_energy_aware", "0", -1},
+	{"/proc/sys/kernel/sched_energy_aware", "0", -1},
 
 // audio pm
 	{"/sys/module/snd_hda_intel/parameters/power_save", "0", -1},
 	{"/sys/module/snd_hda_intel/parameters/power_save_controller", "0", -1},
+
 // P state stuff
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", -1},
 	{"/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference", "performance", -1},
-// 	{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "0", -1},
+	{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "0", -1},
+
 // we want at least half performance, this helps us in race-to-halt and
 // to give us reasonable responses
-// 	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "80", -1},
-// 	{"/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost", "1", -1},
+	{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "50", -1},
+	{"/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost", "1", -1},
 	{"/proc/sys/net/core/default_qdisc", "fq", -1},
 	{"/proc/sys/net/ipv4/tcp_congestion_control", "bbr", -1},
 
@@ -259,13 +257,14 @@ struct write_struct write_list[] = {
 
 // Reload the microcode at boot
 	{"/sys/devices/system/cpu/microcode/reload", "0", -1},
-	
+
 	{"/proc/sys/kernel/nmi_watchdog", "0", -1},
-	
+
 
 // Disable coredump
 	{"/proc/sys/kernel/core_pattern", "|/bin/false", -1},
-
+// Enable turbo mode max
+	{"/proc/sys/kernel/sched_itmt_enabled", "1", -1},
 	// End of list.
 	{NULL, NULL, 0}
 };
