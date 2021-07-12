@@ -95,7 +95,7 @@ struct write_struct write_list[] = {
 	// multi‐ process, CPU-intensive workloads. Whereas it would harm performance,
 	// thus disable it on Server
 	{"/proc/sys/kernel/sched_autogroup_enabled", "1", -1},
-	{"/proc/sys/kernel/sched_energy_aware", "0", -1},
+// 	{"/proc/sys/kernel/sched_energy_aware", "0", -1},
 
 // audio pm
 	{"/sys/module/snd_hda_intel/parameters/power_save", "0", -1},
@@ -104,7 +104,14 @@ struct write_struct write_list[] = {
 // P state stuff
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "powersave", -1},
 	{"/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference", "default", -1},
-// 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq", "5100000", -1},
+	{"/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "5000000", -1},
+	{"/sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq", "5000000", -1},
+	{"/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq", "5100000", -1},
+	{"/sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq", "5100000", -1},
+	{"/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq", "5000000", -1},
+	{"/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq", "5000000", -1},
+	{"/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq", "5000000", -1},
+	{"/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq", "800000", -1},
 	{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "6", -1},
 
