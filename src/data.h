@@ -112,7 +112,7 @@ struct write_struct write_list[] = {
 	{"/sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq", "5000000", -1},
-	{"/sys/devices/system/cpu/cpu9/cpufreq/scaling_max_freq", "5000000", -1},
+	{"/sys/devices/system/cpu/cpu8/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu9/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu10/cpufreq/scaling_max_freq", "5100000", -1},
 	{"/sys/devices/system/cpu/cpu11/cpufreq/scaling_max_freq", "5100000", -1},
@@ -121,7 +121,7 @@ struct write_struct write_list[] = {
 	{"/sys/devices/system/cpu/cpu14/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu15/cpufreq/scaling_max_freq", "5000000", -1},
 	{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq", "800000", -1},
-	{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "6", -1},
+	{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "4", -1},
 
 // we want at least half performance, this helps us in race-to-halt and
 // to give us reasonable responses
