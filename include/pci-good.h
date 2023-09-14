@@ -1,3 +1,5 @@
+#include <clr_power.h>
+
 /*
  * This structure requires some maintenance on it.  Specifically the host
  * controllers need to be listed before any of the devices.  This allows the

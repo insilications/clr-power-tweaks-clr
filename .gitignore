@@ -27,3 +27,5 @@ clr_power
 *.tar.gz
 compile
 generated.c
+
+builddir/

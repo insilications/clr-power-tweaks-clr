@@ -1,3 +1,5 @@
+#include <clr_power.h>
+
 const static struct usb_dev known_good[] =
 {
 /* {0x8087, 0x09fa, 0x0000} */ /* Intel Sensor Hub. Bust on USB autosusped */
@@ -15,4 +17,3 @@ const static struct usb_dev known_good[] =
 {0x04f3, 0x2234, 0x0000},	/* Elan HID-Touchscreen, needed for >PkgC8 */
 /* Dell XPS 13 9360 (KBL) additions end */
 {0xFFFF, 0xFFFF, 0} };
-
