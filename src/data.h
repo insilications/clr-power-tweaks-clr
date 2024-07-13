@@ -46,6 +46,11 @@ struct write_struct {
 };
 
 struct write_struct write_list[] = {
+// Reload the microcode at boot
+{"/sys/devices/system/cpu/microcode/reload", "1", -1, MIN_VERSION, MAX_VERSION},
+{"/proc/sys/kernel/sysrq", "1", -1, MIN_VERSION, MAX_VERSION},
+{"/proc/sys/kernel/nmi_watchdog", "0", -1, MIN_VERSION, MAX_VERSION},
+
 {"/proc/sys/vm/dirty_ratio", "95", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/vm/dirty_background_ratio", "60", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/kernel/randomize_va_space", "0", -1, MIN_VERSION, MAX_VERSION},
@@ -62,6 +67,7 @@ struct write_struct write_list[] = {
 {"/sys/kernel/mm/transparent_hugepage/defrag", "madvise", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/kernel/mm/transparent_hugepage/enabled", "always", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/kernel/mm/transparent_hugepage/shmem_enabled", "advise", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/kernel/mm/transparent_hugepage/khugepaged/defrag", "1", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/kernel/mm/transparent_hugepage/khugepaged/scan_sleep_millisecs", "30000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/devices/virtual/graphics/fbcon/cursor_blink", "0", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/kernel/rcu_expedited", "0", -1, MIN_VERSION, MAX_VERSION},
@@ -81,8 +87,8 @@ struct write_struct write_list[] = {
 // {"/sys/kernel/mm/uksm/run", "1", -1, MIN_VERSION, MAX_VERSION},
 // {"/sys/kernel/mm/uksm/sleep_millisecs", "8000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/kernel/mm/ksm/run", "1", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/kernel/mm/ksm/sleep_millisecs", "18000", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/kernel/mm/ksm/pages_to_scan", "1000", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/kernel/mm/ksm/sleep_millisecs", "20000", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/kernel/mm/ksm/pages_to_scan", "1500", -1, MIN_VERSION, MAX_VERSION},
 
 
 // This tuneable decides the minimum time a task will be be allowed to
@@ -109,7 +115,21 @@ struct write_struct write_list[] = {
 {"/proc/sys/kernel/sched_autogroup_enabled", "1", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/kernel/sched_energy_aware", "0", -1, MIN_VERSION, MAX_VERSION},
 
+// SPR uncore
+// {"/sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00/max_freq_khz", "2300000", -1, MIN_VERSION, MAX_VERSION},
+// {"/sys/devices/system/cpu/intel_uncore_frequency/package_01_die_00/max_freq_khz", "2300000", -1, MIN_VERSION, MAX_VERSION},
+
+// we want at least half performance, this helps us in race-to-halt and
+// to give us reasonable responses
+{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "60", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost", "1", -1, MIN_VERSION, MAX_VERSION},
+
 // P state stuff
+{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "0", -1, MIN_VERSION, MAX_VERSION},
+// {"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "performance", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference", "performance", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", -1, MIN_VERSION, MAX_VERSION},
+{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq", "3700000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", "5100000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq", "5100000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq", "5100000", -1, MIN_VERSION, MAX_VERSION},
@@ -130,21 +150,6 @@ struct write_struct write_list[] = {
 {"/sys/devices/system/cpu/cpu17/cpufreq/scaling_max_freq", "5300000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/devices/system/cpu/cpu18/cpufreq/scaling_max_freq", "5100000", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/devices/system/cpu/cpu19/cpufreq/scaling_max_freq", "5100000", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq", "3700000", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "performance", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/devices/system/cpu/cpu*/power/energy_perf_bias", "0", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor", "performance", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference", "performance", -1, MIN_VERSION, MAX_VERSION},
-
-// SPR uncore
-// {"/sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00/max_freq_khz", "2300000", -1, MIN_VERSION, MAX_VERSION},
-// {"/sys/devices/system/cpu/intel_uncore_frequency/package_01_die_00/max_freq_khz", "2300000", -1, MIN_VERSION, MAX_VERSION},
-
-// we want at least half performance, this helps us in race-to-halt and
-// to give us reasonable responses
-{"/sys/devices/system/cpu/intel_pstate/min_perf_pct", "60", -1, MIN_VERSION, MAX_VERSION},
-{"/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost", "1", -1, MIN_VERSION, MAX_VERSION},
-
 
 // Disable acceptance of all ICMP redirected packets on all interfaces.
 {"/proc/sys/net/ipv4/conf/all/accept_redirects", "0", -1, MIN_VERSION, MAX_VERSION},
@@ -422,11 +427,6 @@ struct write_struct write_list[] = {
 {"/sys/block/bcache0/bcache/writeback_percent", "40", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/fs/bcache/7032f90c-f15f-4d71-8218-3bb9caad28c5/congested_read_threshold_us", "0", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/fs/bcache/7032f90c-f15f-4d71-8218-3bb9caad28c5/congested_write_threshold_us", "0", -1, MIN_VERSION, MAX_VERSION},
-
-// Reload the microcode at boot
-{"/sys/devices/system/cpu/microcode/reload", "1", -1, MIN_VERSION, MAX_VERSION},
-{"/proc/sys/kernel/sysrq", "1", -1, MIN_VERSION, MAX_VERSION},
-{"/proc/sys/kernel/nmi_watchdog", "0", -1, MIN_VERSION, MAX_VERSION},
 
 // Disable coredump
 {"/proc/sys/kernel/core_pattern", "|/bin/false", -1, MIN_VERSION, MAX_VERSION},
