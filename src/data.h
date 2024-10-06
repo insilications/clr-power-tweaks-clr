@@ -72,6 +72,7 @@ struct write_struct write_list[] = {
 {"/sys/devices/virtual/graphics/fbcon/cursor_blink", "0", -1, MIN_VERSION, MAX_VERSION},
 {"/sys/kernel/rcu_expedited", "0", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/vm/mmap_min_addr", "65536", -1, MIN_VERSION, MAX_VERSION},
+{"/proc/sys/vm/max_map_count", "300000", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/vm/overcommit_memory", "0", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/kernel/unprivileged_bpf_disabled", "1", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/kernel/msgmax", "65535", -1, MIN_VERSION, MAX_VERSION},
@@ -114,6 +115,8 @@ struct write_struct write_list[] = {
 // thus disable it on Server
 {"/proc/sys/kernel/sched_autogroup_enabled", "1", -1, MIN_VERSION, MAX_VERSION},
 {"/proc/sys/kernel/sched_energy_aware", "0", -1, MIN_VERSION, MAX_VERSION},
+
+{"/proc/sys/kernel/split_lock_mitigate", "0", -1, MIN_VERSION, MAX_VERSION},
 
 // SPR uncore
 // {"/sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00/max_freq_khz", "2300000", -1, MIN_VERSION, MAX_VERSION},

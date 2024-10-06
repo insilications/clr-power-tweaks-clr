@@ -74,6 +74,6 @@ if [[ -n "${BUILD_OPT}" ]]; then
 #     cmake -DCMAKE_AR=/usr/bin/gcc-ar -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DCMAKE_INSTALL_LIBDIR=/usr/lib64 -DLIB_INSTALL_DIR=/usr/lib64 -DLIB_SUFFIX=64 -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -S . -B builddir/
 #     make -j20 V=1 VERBOSE=1
 #     sudo make install
-#     cmake --build builddir/ --parallel 20
-#     sudo cmake --install builddir/
+    cmake --build builddir/ --parallel 20
+    sudo cmake --install builddir/
 fi
